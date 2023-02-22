@@ -1,6 +1,5 @@
-h1 {
+.sign-in-title {
   font-weight: bold;
-  margin: 0;
 }
 
 h2 {
@@ -68,16 +67,19 @@ input {
   width: 100%;
 }
 
-.container {
+.login-container {
+  position: relative;
+  max-width: 100%;
+  min-height: 480px;
+  width: 768px;
+  margin-top: 6rem;
+  margin-left: 50%;
+  transform: translateX(-50%);
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
-    0 10px 10px rgba(0, 0, 0, 0.22);
-  position: relative;
+              0 10px 10px rgba(0, 0, 0, 0.22);
   overflow: hidden;
-  width: 768px;
-  max-width: 100%;
-  min-height: 480px;
 }
 
 .form-container {
@@ -183,7 +185,7 @@ select {
 .custom-arrow::before,
 .custom-arrow::after {
   --size: 0.4em;
-  
+
   content: '';
   position: absolute;
 
@@ -197,7 +199,7 @@ select {
   border-right: var(--size) solid transparent;
   border-bottom: var(--size) solid rgba(255, 255, 255, 0.5);
 
-  top:35%;
+  top: 35%;
 }
 
 .custom-arrow::after {
@@ -205,5 +207,5 @@ select {
   border-right: var(--size) solid transparent;
   border-top: var(--size) solid rgba(255, 255, 255, 0.5);
 
-  top:65%;
+  top: 65%;
 }

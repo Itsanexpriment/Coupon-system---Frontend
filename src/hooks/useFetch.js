@@ -1,29 +1,25 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-const useFetch = (method, url, requestBody) => {
+const useFetch = (url) => {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    setLoading(true);
+    setIsLoading(true);
 
-    axios({
-      method: method | 'post',
-      url: url,
-      data: requestBody | {}
-    })
+    axios(url)
       .then((response) => {
         setData(response.data);
       })
       .catch(error => setError(error))
-      .finally(() => setLoading(false))
+      .finally(() => setIsLoading(false))
   },
-    [method, url, requestBody]
+    [url]
   )
-
-  return { data, loading, error };
+  
+  return { data, isLoading, error };
 }
 
 export default useFetch;
