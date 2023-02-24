@@ -3,22 +3,35 @@ import Login from './pages/login/Login';
 import './App.css';
 import Customer from './pages/customer/Customer';
 import Company from './pages/company/Company';
-import useFetch from './hooks/useFetch';
 import Header from './components/Header/Header';
 import Home from './pages/Home/Home';
+import RequireAuth from './components/RequireAuth';
+import { ToastContainer } from 'react-toastify';
 
-function App() {
-  const { data, isLoading, error } = useFetch("http://localhost:8080/api/featured");
+const App = () => {
+  
 
+  
   return (
     <>
       <Header />
       <Routes>
+
+        {/* public routes */}
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/customer" element={<Customer />} />
-        <Route path="/company" element={<Company />} />
+        <Route path="login" element={<Login />} />
+
+        {/* protected routes */}
+        <Route element={<RequireAuth allowedUserType={"customer"} />}>
+          <Route path="customer" element={<Customer />} />
+        </Route>
+
+        <Route element={<RequireAuth allowedUserType={"company"} />}>
+          <Route path="company" element={<Company />} />
+        </Route>
+
       </Routes>
+      <ToastContainer />
     </>
   );
 }

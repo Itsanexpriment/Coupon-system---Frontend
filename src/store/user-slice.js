@@ -2,11 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const DEFAULT_STATE = {
   isAuthenticated: false,
-  tokens: { accessToken: null, refreshToken: null },
+  tokens: null,
   type: null
 }
-
-const TOKENS = "tokens";
 
 const userSlice = createSlice({
   name: "user",
@@ -15,26 +13,17 @@ const userSlice = createSlice({
     login(state, action) {
       const payload = action.payload;
 
-      console.log(payload);
-
       state.isAuthenticated = true;
       state.tokens = payload.tokens;
       state.type = payload.type;
-
-      localStorage.setItem(TOKENS, JSON.stringify(payload.tokens))
     },
-    logout(state) {
-      state = DEFAULT_STATE;
-      // localStorage.removeItem(TOKENS);
-    },
-    setIsAuthenticated(state, action) {
-      state.isAuthenticated = action.payload;
-    },
-    setTokens(state, action) {
+    refreshTokens(state, action) {
       state.tokens = action.payload;
     },
-    setType(state, action) {
-      state.type = action.payload;
+    logout(state) {
+      state.isAuthenticated = DEFAULT_STATE.isAuthenticated;
+      state.tokens = DEFAULT_STATE.tokens;
+      state.type = DEFAULT_STATE.type;
     }
   }
 })

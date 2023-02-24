@@ -169,6 +169,7 @@ select {
   background: #4d5061;
   color: white;
   border: 0;
+  border-radius: 0.5rem;
 }
 
 .custom-arrow {
@@ -180,6 +181,8 @@ select {
   height: 100%;
   width: 2rem;
   pointer-events: none;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
 }
 
 .custom-arrow::before,

@@ -4,20 +4,29 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css'
 import { userActions } from '../../store/user-slice';
 import { useDispatch } from 'react-redux';
+import { errorToast } from '../../toast/toast';
+import 'react-toastify/dist/ReactToastify.css';
 
 const DEFAULT_USER_TYPE = "customer"
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const userTypeRef = useRef(DEFAULT_USER_TYPE);
 
   const handleLogin = (event) => {
     event.preventDefault();
-    localStorage.removeItem("tokens");
+
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+    
+    if (email.length === 0 || password.length === 0) {
+      errorToast("Email and password are required");
+      return;
+    }
 
     const credentials = {
       email: emailRef.current.value,
@@ -33,21 +42,20 @@ const Login = () => {
       .then(response => {
 
         const userDetails = {
-            tokens: response.data,
-            type: userTypeRef.current
+          tokens: response.data,
+          type: userTypeRef.current
         }
-        
+
         dispatch(userActions.login(userDetails))
         navigate(`/${userType}`)
       })
-      .catch(err => console.err(err));
+      .catch(err => errorToast("Unable to login"));
   }
 
   const handleChangeUserType = (event) => {
     event.preventDefault();
 
     userTypeRef.current = event.target.value;
-    console.log(userTypeRef.current);
   }
 
   return (
@@ -64,8 +72,8 @@ const Login = () => {
               </select>
               <span className="custom-arrow"></span>
             </div>
-            <input type="email" ref={emailRef} placeholder="Email" />
-            <input type="password" ref={passwordRef} placeholder="Password" />
+            <input type="email" ref={emailRef} placeholder="Email" required />
+            <input type="password" ref={passwordRef} placeholder="Password" required />
             <a href="#">Forgot your password?</a>
             <button className="sign-in-btn" type='submit' onClick={handleLogin}>Sign In</button>
           </form>
@@ -74,7 +82,7 @@ const Login = () => {
           <div className="overlay">
             <div className="overlay-panel overlay-right">
               <h1>Hello, Friend!</h1>
-              <p>Enter your personal details and start journey with us</p>
+              <p>Enter your personal details and start your journey with us</p>
               <button className="sign-up-btn" id="signUp">Sign Up</button>
             </div>
           </div>
