@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../api/axios';
 import { useEffect, useState } from 'react';
 
 const useFetch = (url) => {
@@ -9,7 +9,8 @@ const useFetch = (url) => {
   useEffect(() => {
     setIsLoading(true);
 
-    axios(url)
+    axios
+      .get(url)
       .then((response) => {
         setData(response.data);
       })

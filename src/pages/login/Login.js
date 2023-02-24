@@ -22,7 +22,7 @@ const Login = () => {
 
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    
+
     if (email.length === 0 || password.length === 0) {
       errorToast("Email and password are required");
       return;

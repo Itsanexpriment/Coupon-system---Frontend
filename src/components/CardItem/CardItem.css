@@ -16,7 +16,7 @@
   padding: 30px;
   height: 100%;
   float: left;
-  width: 75%;
+  width: 65%;
 }
 
 .card-container .product-details h1 {
@@ -25,22 +25,6 @@
   font-size: 1.5rem;
   color: #344055;
   margin: 0;
-}
-
-.card-container .product-details h1:before {
-  position: absolute;
-  content: '';
-  right: 0%;
-  top: 0%;
-  transform: translate(25px, -15px);
-  display: inline-block;
-  background: #ffe6e6;
-  border-radius: 5px;
-  font-size: 14px;
-  padding: 5px;
-  color: white;
-  margin: 0;
-  animation: chan-sh 6s ease infinite;
 }
 
 .card-container .product-details>p {
@@ -114,7 +98,7 @@
   position: relative;
   overflow: hidden;
   height: 100%;
-  width: 25%;
+  width: 35%;
   display: inline-block;
 }
 
