@@ -1,28 +1,29 @@
 import { Routes, Route } from 'react-router-dom';
 import Login from './pages/login/Login';
 import './App.css';
-import Customer from './pages/customer/Customer';
-import Company from './pages/company/Company';
 import Header from './components/Header/Header';
-import Home from './pages/Home/Home';
+import Home from './pages/home/Home';
 import RequireAuth from './components/RequireAuth';
+import UserCoupons from './pages/user-coupons/UserCoupons'
 import { ToastContainer } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from './store/user-slice';
 import axios from './api/axios';
+import UserProfile from './pages/profile/UserProfie';
 
 const App = () => {
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
-
   const handleLogout = () => {
-    if (!user.isAuthenticated) {
+    if (user.isAuthenticated) {
+      axios
+        .post("/logout", user.tokens)
+        .then(res => dispatch(userActions.logout()))
+        .catch(err => console.error(err));
+    } else {
       console.error("Can't perform logout when user isn't logged in");
     }
-
-    axios.post("/logout", user.tokens).then(res => console.log(res)).catch(err => console.error(err));
-    dispatch(userActions.logout());
   }
 
   return (
@@ -35,12 +36,9 @@ const App = () => {
         <Route path="login" element={<Login />} />
 
         {/* protected routes */}
-        <Route element={<RequireAuth allowedUserType={"customer"} />}>
-          <Route path="customer" element={<Customer />} />
-        </Route>
-
-        <Route element={<RequireAuth allowedUserType={"company"} />}>
-          <Route path="company" element={<Company />} />
+        <Route element={<RequireAuth allowedUserType={["customer", "company"]} />}>
+          <Route path="my-coupons" element={<UserCoupons />} />
+          <Route path="profile" element={<UserProfile />} />
         </Route>
 
       </Routes>

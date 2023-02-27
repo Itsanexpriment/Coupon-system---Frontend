@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import jwt from "jwt-decode";
 import { userActions } from "../store/user-slice";
-import axios from "axios";
+import axios from "../api/axios";
 
 const currentTime = () => {
   return Math.floor(Date.now() / 1000);
@@ -25,13 +25,14 @@ const useUser = () => {
     if (tokens === null || isTokenValid(tokens.accessToken)) {
       setIsLoading(false);
     } else {
-      axios.post("http://localhost:8080/api/login/refresh", tokens)
+      axios
+        .post("/login/refresh", tokens)
         .then(response => dispatch(userActions.refreshTokens(response.data)))
         .catch(__ => dispatch(userActions.logout()))
         .finally(() => setIsLoading(false))
     }
   }, [])
-
+  
   return { user, isLoading };
 }
 
