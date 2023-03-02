@@ -2,8 +2,16 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .home-title {
   text-align: center;
+}
+
+.loading-spinner {
+  position: absolute;
+  margin-left: 50%;
+  margin-top: 10%;
+  transform: translate(-50%, -25%);
 }

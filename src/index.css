@@ -5,6 +5,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url("./assets/output-onlinepngtools.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 }
 
 #root {
@@ -12,5 +16,5 @@ body {
 }
 
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }

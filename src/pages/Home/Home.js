@@ -1,39 +1,36 @@
-import { useState, useEffect } from 'react';
-import CardItem from '../../components/CardItem/CardItem';
+import { useSpinDelay } from 'spin-delay';
+import { InfinitySpin } from 'react-loader-spinner';
 import './Home.css';
 import useFetch from '../../hooks/useFetch';
-import { useSelector } from 'react-redux';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import CardItemList from '../../components/CardItemList/CardItemList';
+import { errorToast } from '../../toast/toast';
 
 const Home = () => {
   const { data, isLoading, error } = useFetch("/home/featured");
-  const [coupons, setCoupons] = useState([]);
+  const showSpinner = useSpinDelay(isLoading, { delay: 1000, minDuration: 400 });
 
-  const user = useSelector(state => state.user);
-
-  const handleOnBuy = () => {
-    console.log(user.type);
+  if (showSpinner) {
+    return (<div className="loading-spinner">
+      <InfinitySpin
+        width='300'
+        color="#4fa94d"
+      />
+    </div>)
   }
 
-  useEffect(() => {
-    if (data) {
-      const couponCardItems = data.map((c) =>
-        <CardItem
-          key={c.uuid}
-          name={c.title}
-          description={c.description}
-          price={c.price}
-          imageUrl={c.imageUrl}
-          handleOnBuy={handleOnBuy}
-        />
-      )
-      setCoupons(couponCardItems);
-    }
-  }, [data]);
+  if (error) {
+    errorToast("Unable to contact server, try again later");
+  }
 
   return (
     <div className="Home">
-      <h1 className="home-title">Happy Browsing</h1>
-      {coupons}
+      {data &&
+        <>
+          <h1 className="home-title">This week's most popular coupons: </h1>
+          <CardItemList data={data} />
+        </>
+      }
     </div>
   );
 }

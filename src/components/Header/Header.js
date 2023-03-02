@@ -1,8 +1,12 @@
 import { useSelector } from 'react-redux';
 import { Link, Outlet } from 'react-router-dom';
 import './Header.css'
+import LogoutButton from '../buttons/LogoutButton/LogoutButton';
+import SignInButton from '../buttons/SignInButton/SignInButton';
+import CouponsDropdown from '../CouponsDropdown/CouponsDropdown';
 
-const Header = ({ handleLogout }) => {
+
+const Header = ({ handleSignIn, handleLogout }) => {
   const isLoggedIn = useSelector(state => state.user.isAuthenticated);
 
   return (
@@ -13,19 +17,17 @@ const Header = ({ handleLogout }) => {
         <Link className="nav-menu-item" to={"/contact-us"}>Contact Us</Link>
         {isLoggedIn ?
           <>
-            <Link className="nav-menu-item" to={"/my-coupons"}>My Coupons</Link>
+            <CouponsDropdown />
             <Link className="nav-menu-item" to={"/profile"}>Profile</Link>
-            <button className="header-logout-btn" onClick={handleLogout}>
-              <span className="logout-btn-text">Log Out</span>
-              <div className="logout-btn-fill"></div>
-            </button>
+            <LogoutButton handleLogout={handleLogout} />
           </>
           :
-          <Link className="nav-menu-item" to={"/login"}>Sign in</Link>
+          <SignInButton handleSignIn={handleSignIn} />
         }
       </nav>
       <Outlet />
-    </>);
+    </>
+  );
 }
 
 export default Header;

@@ -1,37 +1,48 @@
+import BuyButton from '../buttons/BuyButton/BuyButton';
+import DeleteButton from '../buttons/DeleteButton/DeleteButton';
 import './CardItem.css'
-import placeHolderImg from '../../assets/placeholder.jpeg'
-import { useSelector } from 'react-redux';
 
-const CardItem = ({ name, company, description, price, expiration, imageUrl, handleOnBuy }) => {
-  const user = useSelector(state => state.user);
+const CardItem = ({ coupon,
+  enableBuy,
+  handleOnBuy,
+  enableDelete,
+  handleOnDelete,
+  alwaysShowMoreInfo = false
+}) => {
 
+  let buttonComponent;
+  if (enableBuy) {
+    buttonComponent = <BuyButton couponUuid={coupon.uuid} price={coupon.price} handleOnBuy={handleOnBuy} />
+  } else if (enableDelete) {
+    buttonComponent = <DeleteButton couponUuid={coupon.uuid} handleOnDelete={handleOnDelete} />
+  }
 
-  return (<>
-    <div className="card-container">
-      <div className="product-details">
-        <h1>{name}</h1>
-        <p className="card-description">{description}</p>
-        <div className="purchase-container">
-          <button className="purchase-btn" onClick={handleOnBuy}>
-            <span className="price">{"$" + price}</span>
-            <span className="buy">Buy now</span>
-          </button>
+  const formatDate = (str) => {
+    return str.split("-").reverse().join("/");
+  }
+
+  return (
+    <>
+      <div className="card-container">
+        <div className="product-details">
+          <h1>{coupon.title}</h1>
+          <p className="card-description">{coupon.description}</p>
+          {buttonComponent}
+        </div>
+        <div className="product-image">
+          <img src={coupon.imageUrl} alt="" />
+          <div className={"info" + (alwaysShowMoreInfo ? " force-show" : "")}>
+            <h2>More info:</h2>
+            <ul className="info-list">
+              <li><strong>Company: </strong>{coupon.company.name}</li>
+              <li><strong>Category: </strong>{coupon.category}</li>
+              <li><strong>Start Date: </strong>{formatDate(coupon.startDate)}</li>
+              <li><strong>End Date: </strong>{formatDate(coupon.endDate)}</li>
+            </ul>
+          </div>
         </div>
       </div>
-      <div className="product-image">
-        <img src={imageUrl} />
-        <div className="info">
-          <h2> Description</h2>
-          <ul>
-            <li><strong>Height : </strong>5 Ft </li>
-            <li><strong>Shade : </strong>Olive green</li>
-            <li><strong>Decoration: </strong>balls and bells</li>
-            <li><strong>Material: </strong>Eco-Friendly</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </>
+    </>
   );
 }
 

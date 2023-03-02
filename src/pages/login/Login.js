@@ -29,10 +29,9 @@ const Login = () => {
     }
 
     const credentials = {
-      email: emailRef.current.value,
-      password: passwordRef.current.value
+      email,
+      password
     }
-
     performLogin(credentials, userTypeRef.current);
   }
 
@@ -40,16 +39,15 @@ const Login = () => {
     axios
       .post(`http://localhost:8080/api/login?type=${userType}`, credentials)
       .then(response => {
-
         const userDetails = {
           tokens: response.data,
           type: userTypeRef.current
         }
 
-        dispatch(userActions.login(userDetails))
-        navigate(`/${userType}`)
+        dispatch(userActions.login(userDetails));
+        navigate("/");
       })
-      .catch(err => errorToast("Unable to login"));
+      .catch(err => handleError(err));
   }
 
   const handleChangeUserType = (event) => {
@@ -62,11 +60,11 @@ const Login = () => {
     <>
       <div className="login-container">
         <div className="form-container sign-in-container">
-          <form>
+          <form className="login-form">
             <h1 className="sign-in-title">Sign in</h1>
             <div className="custom-select">
-              <label htmlFor="select-menu">I'm a: </label>
-              <select onChange={handleChangeUserType}>
+              <label htmlFor="select-menu">I'm a:</label>
+              <select className="user-type-select" onChange={handleChangeUserType}>
                 <option value="customer">Customer</option>
                 <option value="company">Company</option>
               </select>
@@ -82,7 +80,7 @@ const Login = () => {
           <div className="overlay">
             <div className="overlay-panel overlay-right">
               <h1>Hello, Friend!</h1>
-              <p>Enter your personal details and start your journey with us</p>
+              <p className="sign-up-message">Enter your personal details and start your journey with us</p>
               <button className="sign-up-btn" id="signUp">Sign Up</button>
             </div>
           </div>
@@ -90,6 +88,30 @@ const Login = () => {
       </div>
     </>
   );
+}
+
+function handleError(err) {
+  let errorMsg;
+
+  if (!err.response) {
+    errorMsg = "Unable to connect to server, try again later";
+  }
+
+  const response = err.response;
+  const status = response.status
+
+  if (status === 500) {
+    errorMsg = "An Internal server error has occured, try again later";
+  }
+
+  if (status === 401) {
+    const errorDetails = response.data.detail;
+    if (errorDetails.includes("Bad credentials")) {
+      errorMsg = "Email and/or password are incorrect";
+    }
+  }
+
+  errorToast(errorMsg ? errorMsg : "Something went wrong, try again later");
 }
 
 export default Login;

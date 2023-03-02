@@ -1,0 +1,31 @@
+.profile-details-item {
+  position: relative;
+  /* height: 10rem;
+  width: 20rem; */
+  padding: 0 1.5rem 2rem;
+  
+  background-color: rgb(2, 144, 44);
+  border-radius: 1rem;
+}
+
+.edit-form-input {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  font-size: 1rem;
+	margin-top: 1rem;
+  padding: 1.2rem 1.7rem;
+  border-radius: 0.2rem;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  width: 90%;
+  display: block;
+  border-bottom: 0.3rem solid transparent;
+  transition: all 0.3s;
+  margin-left: 1rem;
+}
+
+.edit-form-label {
+  display:inline-block;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}

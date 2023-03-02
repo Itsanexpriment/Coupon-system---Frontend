@@ -1,0 +1,29 @@
+.CreateCoupon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-header {
+  text-align: c;
+}
+
+.create-coupon-form {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 50px;
+  height: 100%;
+  gap: 0.5rem;
+  text-align: left;
+  color: black;
+  background-color: whitesmoke;
+  width: 50%;
+  margin-left: 10rem;
+}
+
+.create-coupon-form :nth-child(1) {
+  margin-top: 2rem;
+}

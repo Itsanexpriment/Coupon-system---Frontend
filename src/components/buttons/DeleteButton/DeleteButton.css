@@ -1,0 +1,48 @@
+.delete-container {
+  position: absolute;
+  bottom: 5%;
+  right: 50%;
+}
+
+.delete-btn {
+  transform: translateY(0px);
+  transition: 0.3s linear;
+  background: #ea4a0f;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  color: #eee;
+  padding: 0;
+  margin: 0;
+}
+
+.delete-btn:hover {
+  transform: translateY(-6px);
+}
+
+.delete-btn span {
+  transition: transform 0.3s;
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  margin: 0;
+}
+
+.delete-btn .price{
+  background: #333;
+  border: 0;
+  margin: 0;
+}
+
+.delete-btn .price {
+  transform: translateX(-10%);
+  padding-right: 15px;
+}
+
+.delete-btn .delete {
+  z-index: 3;
+  font-weight: bolder;
+}

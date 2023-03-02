@@ -1,0 +1,10 @@
+.EditForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  margin-top: 2rem;
+  gap: 1.5rem;
+}

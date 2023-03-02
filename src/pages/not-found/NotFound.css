@@ -1,0 +1,19 @@
+.NotFound {
+  display: flex;
+  height: 50%;
+  width: 50%;
+  background-color: wheat;
+  margin-left: 50%;
+  margin-top: 5%;
+  transform: translateX(-50%);
+  justify-content: center;
+}
+
+.not-found-text {
+  font-weight: bold;  
+}
+
+.redirect-link {
+  color: blue;
+  font-weight: bold;
+}

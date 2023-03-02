@@ -9,22 +9,26 @@ const usePrivateRequest = (url, method, onSuccess, onError) => {
 
   const tokens = user.tokens;
 
-  const performRequest = async (accessToken, data) => {
-    axios(url, { method, data, headers: { 'Authorization': `Bearer ${accessToken}` } })
+  const performRequest = async (accessToken, data, queryParams) => {
+    axios(
+      url,
+      { method, data, params: queryParams, headers: { 'Authorization': `Bearer ${accessToken}` } }
+    )
       .then(onSuccess)
       .catch(onError)
   }
 
-  const request = async (requestData) => {
+  const request = async (requestData, queryParams) => {
+    
     if (isTokenValid(tokens.accessToken)) {
-      performRequest(tokens.accessToken, requestData);
+      performRequest(tokens.accessToken, requestData, queryParams);
     }
     else if (isTokenValid(tokens.refreshToken)) {
       axios
         .post("http://localhost:8080/api/login/refresh", tokens)
         .then(res => {
           dispatch(userActions.refreshTokens(res.data));
-          performRequest(res.data.accessToken, requestData);
+          performRequest(res.data.accessToken, requestData, queryParams);
         })
         .catch(err => onError(err))
     } else {
