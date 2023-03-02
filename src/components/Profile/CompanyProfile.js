@@ -4,31 +4,21 @@ import usePrivateRequest from "../../hooks/usePrivateRequest";
 import EditForm from "../EditForm/EditForm";
 import EditInput from "../EditForm/EditInput";
 import { errorToast, successToast } from "../../toast/toast";
+import handleGenericError from "../../utils/handleGenericError";
 
 const CompanyProfile = () => {
   const [userDetails, setUserDetails] = useState(null);
   const getUserInfo = usePrivateGet(
     "/company",
     (res) => setUserDetails(res.data),
-    (err) => console.error(err) // TODO - toast me baby
+    handleGenericError
   );
 
   const postUserInfo = usePrivateRequest(
     "/company/update",
     "put",
     (__) => successToast("Changes saved :)"),
-    (err) => {
-      if (err?.response?.status === 400) {
-        const serverMsg = err.response.data.detail;
-        let toastMsg = "";
-        if (serverMsg.includes("Email")) {
-          toastMsg = "Can't update email - the address is already taken";
-        } else if (serverMsg.includes("Name")) {
-          toastMsg = "Can't update name - the address is already taken";
-        }
-        errorToast(toastMsg);
-      }
-    }
+    handleError
   );
 
   const companyNameRef = useRef()
@@ -54,15 +44,47 @@ const CompanyProfile = () => {
     postUserInfo(data);
   }
 
-  return (<>
-    {userDetails &&
-      <EditForm onSave={handleSave}>
-        <EditInput inputName="Company Name" defaultValue={userDetails.name} myRef={companyNameRef} />
-        <EditInput inputName="Email" defaultValue={userDetails.email} myRef={emailRef} />
-        <EditInput inputName="Edit password" placeholder="Enter new password" myRef={passwordRef} type="password" />
-      </EditForm>}
-  </>
+  return (
+    <>
+      {userDetails &&
+        <EditForm onSave={handleSave}>
+          <EditInput inputName="Company Name" defaultValue={userDetails.name} myRef={companyNameRef} />
+          <EditInput inputName="Email" defaultValue={userDetails.email} myRef={emailRef} />
+          <EditInput inputName="Edit password" placeholder="Enter new password" myRef={passwordRef} type="password" />
+        </EditForm>
+      }
+    </>
   );
+}
+
+function handleError(err) {
+  if (!err.response) {
+    errorToast("Unable to connect to server, try again later");
+    return;
+  }
+
+  const response = err.response;
+  const status = response.status;
+  let errorMsg;
+
+  if (status === 500) {
+    errorMsg = "An Internal server error has occured, try again later";
+  }
+
+  if (status === 400) {
+    const errorDetails = response.data.detail;
+    if (errorDetails.includes("Email")) {
+      errorMsg = "Can't update email - the address is already taken";
+    }
+    else if (errorDetails.includes("Name")) {
+      errorMsg = "Can't update name - the address is already taken";
+    }
+    else if (errorDetails.includes("password")) {
+      errorMsg = "Password must be at least 8 characters and have at least one upper and lowercase letters and one digit";
+    }
+  }
+
+  errorToast(errorMsg ? errorMsg : "Something went wrong, try again later");
 }
 
 export default CompanyProfile;

@@ -1,8 +1,7 @@
 import { confirmAlert } from 'react-confirm-alert';
 import './BuyButton.css'
 
-const BuyButton = ({ couponUuid, price, handleOnBuy }) => {
-
+const BuyButton = ({ couponUuid, price, handleOnBuy, alert }) => {
   const handleOnBuyWrapper = () => {
     confirmAlert({
       title: 'Confirm to submit',

@@ -5,8 +5,8 @@ const useBuyRequest = () => {
   const buyRequest = usePrivateRequest(
     "/customer/purchase",
     "post",
-    __ => successToast("Coupon purchased :)"),
-    handleError
+    __ => successToast("Coupon purchased :) refresh the page to see changes"),
+    handleError,
   )
   return buyRequest;
 }

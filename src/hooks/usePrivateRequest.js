@@ -19,7 +19,7 @@ const usePrivateRequest = (url, method, onSuccess, onError) => {
   }
 
   const request = async (requestData, queryParams) => {
-    
+
     if (isTokenValid(tokens.accessToken)) {
       performRequest(tokens.accessToken, requestData, queryParams);
     }

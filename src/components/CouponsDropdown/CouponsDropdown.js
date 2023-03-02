@@ -8,6 +8,7 @@ import { useState, useMemo } from 'react';
 import './CouponsDropdown.css'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { CUSTOMER, COMPANY } from '../../utils/constants';
 
 const CouponsDropdown = () => {
   const userType = useSelector(state => state.user.type);
@@ -17,7 +18,7 @@ const CouponsDropdown = () => {
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
   const dropdownItems = useMemo(() => {
-    if (userType === "customer") {
+    if (userType === CUSTOMER) {
       return (
         <>
           <DropdownItem onClick={() => { naviagate("/my-coupons") }}>View my coupons</DropdownItem>
@@ -25,7 +26,7 @@ const CouponsDropdown = () => {
           <DropdownItem onClick={() => { naviagate("/expiring-soon") }}>Expiring soon</DropdownItem>
         </>
       )
-    } else if (userType === "company") {
+    } else if (userType === COMPANY) {
       return (
         <>
           <DropdownItem onClick={() => { naviagate("/my-coupons") }}>View my coupons</DropdownItem>

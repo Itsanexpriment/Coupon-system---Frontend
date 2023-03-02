@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
 import CardItem from "../CardItem/CardItem";
 import useBuyRequest from "../../hooks/useBuyRequest";
@@ -11,8 +10,7 @@ const TITLE = "Title";
 const START_DATE = "Start Date";
 const END_DATE = "End Date";
 
-const CardItemList = ({ data, enableBuy = false, enableDelete = false }) => {
-  const userType = useSelector(state => state.user.type);
+const CardItemList = ({ data, enableBuy = false, enableDelete = false}) => {
   const [coupons, setCoupons] = useState([]);
   const sortByRef = useRef();
 

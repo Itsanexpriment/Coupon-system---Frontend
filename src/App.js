@@ -15,6 +15,9 @@ import Forbidden from './pages/forbidden/Forbidden';
 import Shop from './pages/shop/Shop';
 import Expiring from './pages/expiring/Expiring';
 import NotFound from './pages/not-found/NotFound';
+import handleGenericError from './utils/handleGenericError';
+import { CUSTOMER, COMPANY } from './utils/constants';
+import About from './pages/about/About';
 
 const App = () => {
   const user = useSelector(state => state.user);
@@ -25,7 +28,7 @@ const App = () => {
     if (user.isAuthenticated) {
       axios
         .post("/logout", user.tokens)
-        .catch(err => console.error(err))
+        .catch(handleGenericError)
         .finally(() => {
           dispatch(userActions.logout());
           navigate("/login");
@@ -48,25 +51,26 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="forbidden" element={<Forbidden />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="about" element={<About />} />
 
         {/* protected routes */}
-        <Route element={<RequireAuth allowedUserTypes={["customer", "company"]} />}>
+        <Route element={<RequireAuth allowedUserTypes={[CUSTOMER, COMPANY]} />}>
           <Route path="my-coupons" element={<UserCoupons />} />
           <Route path="profile" element={<UserProfile />} />
         </Route>
 
-        <Route element={<RequireAuth allowedUserTypes={["company"]} />}>
+        <Route element={<RequireAuth allowedUserTypes={[COMPANY]} />}>
           <Route path="create-coupon" element={<CreateCoupon />} />
         </Route>
-        
-        <Route element={<RequireAuth allowedUserTypes={["customer"]} />}>
+
+        <Route element={<RequireAuth allowedUserTypes={[CUSTOMER]} />}>
           <Route path="Shop" element={<Shop />} />
           <Route path="expiring-soon" element={<Expiring />} />
         </Route>
 
+        <Route path="*" element={<NotFound />} />
       </Routes>
-      <ToastContainer />
+      <ToastContainer limit={1} pauseOnFocusLoss={false} />
     </>
   );
 }

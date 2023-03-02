@@ -13,6 +13,7 @@ const isTokenValid = (token) => {
 }
 
 const useUser = () => {
+
   const [isLoading, setIsLoading] = useState(false);
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();

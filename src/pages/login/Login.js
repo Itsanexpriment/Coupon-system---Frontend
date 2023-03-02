@@ -1,21 +1,29 @@
 import axios from 'axios';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css'
 import { userActions } from '../../store/user-slice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { errorToast } from '../../toast/toast';
 import 'react-toastify/dist/ReactToastify.css';
+import { CUSTOMER, COMPANY } from '../../utils/constants';
 
-const DEFAULT_USER_TYPE = "customer"
+const DEFAULT_USER_TYPE = CUSTOMER
 
 const Login = () => {
+  const isAuthenticated = useSelector(state => state.user.isAuthenticated);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const userTypeRef = useRef(DEFAULT_USER_TYPE);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated])
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -52,7 +60,6 @@ const Login = () => {
 
   const handleChangeUserType = (event) => {
     event.preventDefault();
-
     userTypeRef.current = event.target.value;
   }
 
@@ -65,14 +72,13 @@ const Login = () => {
             <div className="custom-select">
               <label htmlFor="select-menu">I'm a:</label>
               <select className="user-type-select" onChange={handleChangeUserType}>
-                <option value="customer">Customer</option>
-                <option value="company">Company</option>
+                <option value={CUSTOMER}>Customer</option>
+                <option value={COMPANY}>Company</option>
               </select>
               <span className="custom-arrow"></span>
             </div>
             <input type="email" ref={emailRef} placeholder="Email" required />
             <input type="password" ref={passwordRef} placeholder="Password" required />
-            <a href="#">Forgot your password?</a>
             <button className="sign-in-btn" type='submit' onClick={handleLogin}>Sign In</button>
           </form>
         </div>
@@ -91,14 +97,14 @@ const Login = () => {
 }
 
 function handleError(err) {
-  let errorMsg;
-
   if (!err.response) {
-    errorMsg = "Unable to connect to server, try again later";
+    errorToast("Unable to connect to server, try again later");
+    return;
   }
 
   const response = err.response;
   const status = response.status
+  let errorMsg;
 
   if (status === 500) {
     errorMsg = "An Internal server error has occured, try again later";

@@ -7,14 +7,24 @@ const CardItem = ({ coupon,
   handleOnBuy,
   enableDelete,
   handleOnDelete,
-  alwaysShowMoreInfo = false
+  alwaysShowMoreInfo = false,
 }) => {
 
   let buttonComponent;
+
   if (enableBuy) {
-    buttonComponent = <BuyButton couponUuid={coupon.uuid} price={coupon.price} handleOnBuy={handleOnBuy} />
+    buttonComponent =
+      <BuyButton
+        couponUuid={coupon.uuid}
+        price={coupon.price}
+        handleOnBuy={handleOnBuy}
+      />
   } else if (enableDelete) {
-    buttonComponent = <DeleteButton couponUuid={coupon.uuid} handleOnDelete={handleOnDelete} />
+    buttonComponent =
+      <DeleteButton
+        couponUuid={coupon.uuid}
+        handleOnDelete={handleOnDelete}
+      />
   }
 
   const formatDate = (str) => {

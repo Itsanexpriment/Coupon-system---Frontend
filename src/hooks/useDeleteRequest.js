@@ -5,7 +5,7 @@ const useDeleteRequest = () => {
   const deleteRequest = usePrivateRequest(
     "/company/delete",
     "delete",
-    __ => successToast("Coupon deleted :)"),
+    __ => successToast("Coupon deleted :) refresh the page to see changes"),
     handleError
   )
   return deleteRequest;
@@ -35,17 +35,7 @@ function handleServerError(errResponse) {
 }
 
 function resolveErrorMessage(serverMsg) {
-  //TODO - modify this to match delete errors
-
-  let msg = "Unable to complete purchase, ";
-
-  if (serverMsg.includes("amount")) {
-    msg += "coupon is out of stock";
-  }
-  else if (serverMsg.includes("customer")) {
-    msg += "you already own this coupon"
-  }
-  return msg;
+  return `Unable to delete coupon, ${serverMsg}`;
 }
 
 export default useDeleteRequest;

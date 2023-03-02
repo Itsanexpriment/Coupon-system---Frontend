@@ -1,15 +1,16 @@
 import { useSelector } from "react-redux";
 import CompanyProfile from "../../components/Profile/CompanyProfile";
 import CustomerProfile from "../../components/Profile/CustomerProfile";
+import NotFound from "../not-found/NotFound";
+import { CUSTOMER, COMPANY } from "../../utils/constants";
 
 const UserProfile = () => {
-  const user = useSelector(state => state.user);
-  const userType = user?.type
+  const userType = useSelector(state => state.user.type);
 
   return (
-    userType === "company" ?
-      <CompanyProfile /> :
-      <CustomerProfile />);
+    userType === COMPANY ? <CompanyProfile />
+      : userType == CUSTOMER ? <CustomerProfile />
+        : <NotFound />);
 }
 
 export default UserProfile;

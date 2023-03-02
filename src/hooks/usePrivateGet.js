@@ -27,7 +27,7 @@ const usePrivateGet = (url, onSuccess, onError) => {
           dispatch(userActions.refreshTokens(res.data));
           performRequest(res.data.accessToken)
         })
-        .catch(err => onError(err))
+        .catch(onError)
     } else {
       dispatch(userActions.logout())
     }

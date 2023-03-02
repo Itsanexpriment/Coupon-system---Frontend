@@ -1,0 +1,10 @@
+.About {
+  display: flex;
+  flex-direction: column;
+  margin-left: 50%;
+  margin-top: 5%;
+  padding: 0rem 1rem;
+  transform: translateX(-50%);
+  background-color: wheat;
+  text-align: center;
+}

@@ -23,6 +23,7 @@ a {
 
 .sign-in-btn,
 .sign-up-btn {
+  margin-top: 1rem;
   border-radius: 20px;
   border: 1px solid #FF4B2B;
   background-color: #FF4B2B;
