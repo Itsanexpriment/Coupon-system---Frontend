@@ -63,6 +63,12 @@ const Login = () => {
     userTypeRef.current = event.target.value;
   }
 
+  const handleSignUp = (event) => {
+    event.preventDefault();
+
+    errorToast("To be implemented in future release");
+  }
+
   return (
     <>
       <div className="login-container">
@@ -87,7 +93,7 @@ const Login = () => {
             <div className="overlay-panel overlay-right">
               <h1>Hello, Friend!</h1>
               <p className="sign-up-message">Enter your personal details and start your journey with us</p>
-              <button className="sign-up-btn" id="signUp">Sign Up</button>
+              <button className="sign-up-btn" id="signUp" onClick={handleSignUp}>Sign Up</button>
             </div>
           </div>
         </div>
