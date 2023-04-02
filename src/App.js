@@ -18,6 +18,7 @@ import NotFound from './pages/not-found/NotFound';
 import handleGenericError from './utils/handleGenericError';
 import { CUSTOMER, COMPANY } from './utils/constants';
 import About from './pages/about/About';
+import ContactUs from './pages/contact-us/ContactUs';
 
 const App = () => {
   const user = useSelector(state => state.user);
@@ -52,6 +53,7 @@ const App = () => {
         <Route path="login" element={<Login />} />
         <Route path="forbidden" element={<Forbidden />} />
         <Route path="about" element={<About />} />
+        <Route path="contact-us" element={<ContactUs />} />
 
         {/* protected routes */}
         <Route element={<RequireAuth allowedUserTypes={[CUSTOMER, COMPANY]} />}>
