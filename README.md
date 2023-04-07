@@ -1,6 +1,6 @@
 # coupon-system
 
-third and last phase of the John Bryce Academy final project.
+third and last stage of the John Bryce Academy final project.
 
 A Frontend application that enables companies to issue and manage coupons as well as allowing customers to purchase coupons can be purchased by customers.
 * Built using React library.
